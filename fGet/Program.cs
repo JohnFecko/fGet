@@ -10,21 +10,29 @@ namespace fGet
     {
         static void Main(string[] args)
         {
+            var output = "";
+            var url = "";
+            
             if (args.Length > 0)
             {
-                Console.WriteLine(DownloadUrl(args[0]));
+                foreach (var arg in args.Where(arg => arg.StartsWith("http")))
+                {
+                    url = arg;
+                }
+                output = DownloadUrl(url);
             }
+            Console.WriteLine(output);
         }
 
         public static string DownloadUrl(string url)
         {
-            string sContents = string.Empty;
+            var sContents = "";
             try
             {
                 if (url.ToLower().IndexOf("http:") > -1)
                 {
-                    System.Net.WebClient wc = new System.Net.WebClient();
-                    byte[] response = wc.DownloadData(url);
+                    var wc = new System.Net.WebClient();
+                    var response = wc.DownloadData(url);
                     sContents = System.Text.Encoding.ASCII.GetString(response);
                 }
             }
